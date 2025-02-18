@@ -1,0 +1,26 @@
+id: com.github.Testing
+default-branch: &app-version '1'
+sdk: org.freedesktop.Sdk
+runtime: org.freedesktop.Platform
+runtime-version: &runtime-version '24.08'
+finish-args:
+  - --share=ipc
+  - --socket=x11
+  - --socket=wayland
+  - --device=all
+  - --socket=pulseaudio
+  - --share=network
+  - --allow=multiarch
+command: Testing
+modules:
+  - name: Testing
+    buildsystem: simple
+    sources:
+      - type: file
+        path: com.github.Testing.appdata.xml
+      - type: file
+        path: Scripts/Testing
+    build-commands:
+      - |
+        install -Dm644 com.github.Testing.appdata.xml -t /app/share/appdata
+        install -Dm744 Testing -t /app/bin
