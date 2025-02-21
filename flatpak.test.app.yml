@@ -1,0 +1,37 @@
+id: flatpak.test.app
+default-branch: &app-version '1'
+runtime: org.freedesktop.Platform
+runtime-version: &runtime-version '24.08'
+sdk: org.freedesktop.Sdk
+finish-args:
+  - --share=ipc
+  - --socket=x11
+  - --socket=wayland
+  - --device=all
+  - --socket=pulseaudio
+  - --share=network
+  - --allow=multiarch
+command: Test
+add-extensions:
+  flatpak.test.app.extension:
+    version: '1.0'
+    directory: extensions
+    add-ld-path: lib
+    merge-dirs: plug-ins;help
+    subdirectories: true
+    no-autodownload: true
+    autodelete: true
+cleanup-commands:
+  - mkdir -p ${FLATPAK_DEST}/extensions
+modules:
+  - name: Test
+    buildsystem: simple
+    sources:
+      - type: file
+        path: flatpak.test.app.appdata.xml
+      - type: file
+        path: Scripts/Test
+    build-commands:
+      - |
+        install -Dm644 flatpak.test.app.appdata.xml -t /app/share/appdata
+        install -Dm744 Test -t /app/bin
