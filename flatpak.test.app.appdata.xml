@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component>
   <id>flatpak.test.app</id>
-  <name>Testing</name>
+  <name>Test</name>
   <summary>Flatpak manifest used for testing</summary>
   <metadata_license>CC-BY-SA-3.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
