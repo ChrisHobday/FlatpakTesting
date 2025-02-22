@@ -22,7 +22,7 @@ add-extensions:
     no-autodownload: true
     autodelete: true
 cleanup-commands:
-  - mkdir -p ${FLATPAK_DEST}/extensions
+  - mkdir -p /app/share/extensions/test
 modules:
   - name: Test
     buildsystem: simple

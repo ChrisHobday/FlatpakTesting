@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component>
+<component type="addon">
   <id>flatpak.test.app.extension.test</id>
   <name>Test Extension</name>
   <summary>Flatpak manifest used for testing extensions</summary>
