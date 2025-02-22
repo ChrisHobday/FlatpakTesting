@@ -14,5 +14,5 @@ modules:
         path: Scripts/ExtensionTest
     build-commands:
       - |
-        install -Dm644 flatpak.test.app.extension.test.appdata.xml -t /app/share/appdata
-        install -Dm744 ExtensionTest -t /app/extensions
+        install -Dm644 flatpak.test.app.extension.test.appdata.xml -t /app/extensions/test/share/appdata
+        install -Dm744 ExtensionTest -t /app/extensions/test
