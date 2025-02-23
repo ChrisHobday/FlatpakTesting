@@ -22,11 +22,6 @@ add-extensions:
     autodelete: true
 cleanup-commands:
 modules:
-  - name: CreateExtensionDirectory
-    buildsystem: simple
-    build-commands:
-      - |
-        mkdir -p /app/extensions
   - name: Test
     buildsystem: simple
     sources:
@@ -36,5 +31,11 @@ modules:
         path: Scripts/Test
     build-commands:
       - |
+        # Install flatpak.test.app.appdata.xml in /app/share/appdata
         install -Dm644 flatpak.test.app.appdata.xml -t /app/share/appdata
+
+        # Install Test in /app/bin
         install -Dm744 Test -t /app/bin
+
+        # Create /app/extensions directory
+        mkdir -p /app/extensions
