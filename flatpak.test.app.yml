@@ -2,6 +2,8 @@ id: flatpak.test.app
 runtime: org.freedesktop.Platform
 runtime-version: &runtime-version '24.08'
 sdk: org.freedesktop.Sdk
+rename-desktop-file: Test.desktop
+rename-icon: Test
 finish-args:
   - --share=ipc
   - --socket=x11
@@ -27,14 +29,15 @@ modules:
       - type: file
         path: flatpak.test.app.appdata.xml
       - type: file
+        path: Icons/Test.png
+      - type: file
+        path: DesktopEntries/Test.desktop
+      - type: file
         path: Scripts/Test
     build-commands:
       - |
-        # Install flatpak.test.app.appdata.xml in /app/share/appdata
         install -Dm644 flatpak.test.app.appdata.xml -t /app/share/appdata
-
-        # Install Test in /app/bin
+        install -Dm644 Test.png -t /app/share/icons/hicolor/256x256/apps
+        install -Dm644 Test.desktop -t /app/share/applications
         install -Dm744 Test -t /app/bin
-
-        # Create /app/extensions directory
         mkdir -p /app/extensions

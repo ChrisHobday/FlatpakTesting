@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Test App
+GenericName=Test
+Comment=Flatpak Test App
+Exec=Test
+Icon=Test
+Keywords=Test;
