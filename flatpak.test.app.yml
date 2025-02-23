@@ -14,7 +14,6 @@ finish-args:
 command: Test
 add-extensions:
   flatpak.test.app.extension:
-    version: '1.0'
     directory: extensions
     add-ld-path: lib
     merge-dirs: plug-ins;help
@@ -22,8 +21,12 @@ add-extensions:
     no-autodownload: true
     autodelete: true
 cleanup-commands:
-  - mkdir -p /app/share/extensions/test
 modules:
+  - name: CreateExtensionDirectory
+    buildsystem: simple
+    build-commands:
+      - |
+        mkdir -p /app/extensions
   - name: Test
     buildsystem: simple
     sources:
