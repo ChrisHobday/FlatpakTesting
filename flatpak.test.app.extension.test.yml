@@ -1,7 +1,5 @@
 id: flatpak.test.app.extension.test
-default-branch: &app-version '1'
 runtime: flatpak.test.app
-runtime-version: &runtime-version '1'
 sdk: org.freedesktop.Sdk//24.08
 build-extension: true
 modules:
