@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Test Extension
+GenericName=Extension
+Comment=Flatpak Test Extension
+Exec=Extension
+Icon=Extension
+Keywords=Test;Extension;

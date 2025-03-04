@@ -9,8 +9,14 @@ modules:
       - type: file
         path: flatpak.test.app.extension.test.appdata.xml
       - type: file
+        path: Icons/Extension.png
+      - type: file
+        path: DesktopEntries/Extension.desktop
+      - type: file
         path: Scripts/Extension
     build-commands:
       - |
         install -Dm644 flatpak.test.app.extension.test.appdata.xml -t /app/extensions/test/share/appdata
+        install -Dm644 Extension.png -t /app/extensions/test/share/icons/hicolor/256x256/apps
+        install -Dm644 Extension.desktop -t /app/extensions/test/share/applications
         install -Dm744 Extension -t /app/extensions/test/bin
