@@ -1,0 +1,8 @@
+[Flatpak Repo]
+Title=Test
+Url=https://github.com/ChrisHobday/flatpak.test.app/repo
+Homepage=https://github.com/ChrisHobday/flatpak.test.app
+Comment=Test Repo
+Description=Test Repo
+Icon=https://github.com/ChrisHobday/flatpak.test.app/Icons/Test.png
+GPGKey=mDMEZ7T88xYJKwYBBAHaRw8BAQdAYZ78QjMdwHAaQbQKPjc9AXUe5fXTzo9qcKn9Z3yjqKW0I0NocmlzIDxob2JkYXkuY2hyaXNAcHJvdG9ubWFpbC5jb20+iJMEExYKADsWIQTH73pC0dO3z8R+8Ke0Usp8XXgu/AUCZ7T88wIbAwULCQgHAgIiAgYVCgkICwIEFgIDAQIeBwIXgAAKCRC0Usp8XXgu/KgdAP96HyR+AqZc1Pl2zpyaIPl+lRx4lcRUfoKbCDSLq4/7ZwEA3UIF4khlAl3JoDlIZe/K071EUBsFknY6oAsNquh1qQu4OARntPzzEgorBgEEAZdVAQUBAQdASmVv+YRxEsNuVaBy9mgcMmehE7NK2B8FfhBCdVionXsDAQgHiHgEGBYKACAWIQTH73pC0dO3z8R+8Ke0Usp8XXgu/AUCZ7T88wIbDAAKCRC0Usp8XXgu/HYvAP9nHFLaOQzvEBy0+DaNT1fTs2nL3OGK89IAK3bG7yPywQD/UxiRujhZmwZTrRxatJy1CtRh5xsXdroD0BbjWF+Y7QU==pUoN
