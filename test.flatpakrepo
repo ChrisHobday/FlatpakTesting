@@ -1,6 +1,6 @@
 [Flatpak Repo]
 Title=Test
-Url=https://chrishobday.github.io/flatpak.test.app/repo
+Url=https://chrishobday.github.io/flatpak.test.app/repo/
 Homepage=https://chrishobday.github.io/flatpak.test.app
 Comment=Test Repo
 Description=Test Repo
