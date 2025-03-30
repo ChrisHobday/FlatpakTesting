@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="runtime">
+    <id>org.wine.Sdk</id>
+    <name>Wine Sdk</name>
+    <summary>Wine Sdk</summary>
+</component>

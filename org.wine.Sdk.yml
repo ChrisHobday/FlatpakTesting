@@ -1,0 +1,253 @@
+build-runtime: true
+id: org.wine.Sdk
+id-platform: org.wine.Platform
+branch: &app-version '10.0'
+sdk: org.freedesktop.Sdk
+runtime: org.freedesktop.Platform
+runtime-version: &runtime-version '24.08'
+finish-args:
+  - --sdk=org.wine.Sdk//10.0
+  - --runtime=org.wine.Platform//10.0
+  - --allow=multiarch
+sdk-extensions:
+  - org.freedesktop.Sdk.Compat.i386
+  - org.freedesktop.Sdk.Extension.toolchain-i386
+  - org.freedesktop.Sdk.Extension.mingw-w64
+# inherit-platform-extensions:
+#   - org.freedesktop.Platform.Compat.i386
+# inherit-extensions:
+#   - org.freedesktop.Platform.GL
+#   - org.freedesktop.Platform.VAAPI.Intel
+#   - org.freedesktop.Platform.VulkanLayer
+#   - org.freedesktop.Platform.Timezones
+#   - org.freedesktop.Platform.GStreamer
+#   - org.freedesktop.Platform.openh264
+# inherit-sdk-extensions:
+  # - org.freedesktop.Sdk.Extension
+# add-extensions:
+#   org.freedesktop.Platform.Compat.i386:
+#     directory: lib/i386-linux-gnu
+#     version: *runtime-version
+
+#   org.freedesktop.Platform.Compat.i386.Debug:
+#     directory: lib/debug/lib/i386-linux-gnu
+#     version: *runtime-version
+#     no-autodownload: true
+
+#   org.freedesktop.Platform.VAAPI.Intel.i386:
+#     directory: lib/i386-linux-gnu/dri/intel-vaapi-driver
+#     version: *runtime-version
+#     versions: *runtime-version
+#     autodelete: false
+#     no-autodownload: true
+#     add-ld-path: lib
+#     download-if: have-intel-gpu
+#     autoprune-unless: have-intel-gpu
+
+#   org.freedesktop.Platform.ffmpeg-full:
+#     directory: lib/ffmpeg
+#     add-ld-path: .
+#     version: *runtime-version
+#     autodelete: false
+
+#   org.freedesktop.Platform.ffmpeg_full.i386:
+#     directory: lib32/ffmpeg
+#     add-ld-path: .
+#     version: *runtime-version
+#     autodelete: false
+# cleanup-commands:
+#   - echo "cleanup"
+
+
+
+# x-gl-version: &gl-version '1.4'
+# x-gl-versions: &gl-versions 24.08;1.4
+# x-gl-merge-dirs: &gl-merge-dirs vulkan/icd.d;glvnd/egl_vendor.d;egl/egl_external_platform.d;OpenCL/vendors;lib/dri;lib/d3d;lib/gbm;vulkan/explicit_layer.d;vulkan/implicit_layer.d
+# finish-args:
+#   - --share=ipc
+#   - --socket=x11
+#   - --socket=wayland
+#   - --device=all
+#   - --socket=pulseaudio
+#   - --share=network
+#   - --allow=multiarch
+#   - --allow=devel
+#   - --system-talk-name=org.freedesktop.UDisks2
+#   - --system-talk-name=org.freedesktop.NetworkManager
+#   - --filesystem=xdg-desktop
+#   - --filesystem=xdg-documents
+#   - --filesystem=xdg-pictures
+#   - --filesystem=xdg-music
+#   - --filesystem=xdg-videos
+#   - --filesystem=xdg-download
+#   - --env=WINEDLLPATH=/app/dlls/lib32:/app/dlls/lib
+#   - --env=WINEPREFIX=/var/data/wine
+#   - --env=GST_PLUGIN_SYSTEM_PATH=/app/lib32/gstreamer-1.0:/app/lib/gstreamer-1.0:/usr/lib/i386-linux-gnu/gstreamer-1.0:/usr/lib/x86_64-linux-gnu/gstreamer-1.0
+
+# add-extensions:
+#   org.freedesktop.Platform.Compat.i386:
+#     directory: lib/i386-linux-gnu
+#     version: *runtime-version
+
+#   org.freedesktop.Platform.Compat.i386.Debug:
+#     directory: lib/debug/lib/i386-linux-gnu
+#     version: *runtime-version
+#     no-autodownload: true
+
+#   org.freedesktop.Platform.GL32:
+#     directory: lib/i386-linux-gnu/GL
+#     version: *gl-version
+#     versions: *gl-versions
+#     subdirectories: true
+#     no-autodownload: true
+#     autodelete: false
+#     add-ld-path: lib
+#     merge-dirs: *gl-merge-dirs
+#     download-if: active-gl-driver
+#     enable-if: active-gl-driver
+#     autoprune-unless: active-gl-driver
+
+#   org.freedesktop.Platform.GL32.Debug:
+#     directory: lib/debug/lib/i386-linux-gnu/GL
+#     version: *gl-version
+#     versions: *gl-versions
+#     subdirectories: true
+#     no-autodownload: true
+#     merge-dirs: *gl-merge-dirs
+#     enable-if: active-gl-driver
+#     autoprune-unless: active-gl-driver
+
+#   org.freedesktop.Platform.VAAPI.Intel.i386:
+#     directory: lib/i386-linux-gnu/dri/intel-vaapi-driver
+#     version: *runtime-version
+#     versions: *runtime-version
+#     autodelete: false
+#     no-autodownload: true
+#     add-ld-path: lib
+#     download-if: have-intel-gpu
+#     autoprune-unless: have-intel-gpu
+
+#   org.freedesktop.Platform.ffmpeg-full:
+#     directory: lib/ffmpeg
+#     add-ld-path: .
+#     version: *runtime-version
+#     autodelete: false
+
+#   org.freedesktop.Platform.ffmpeg_full.i386:
+#     directory: lib32/ffmpeg
+#     add-ld-path: .
+#     version: *runtime-version
+#     autodelete: false
+
+#   org.winehq.WineStaging.gecko:
+#     directory: share/wine/gecko
+#     bundle: true
+
+#   org.winehq.WineStaging.mono:
+#     directory: share/wine/mono
+#     bundle: true
+
+#   org.winehq.WineStaging.DLLs:
+#     directory: dlls
+#     subdirectories: true
+#     merge-dirs: lib;lib32;
+#     version: *app-version
+#     versions: *extension-versions
+
+# inherit-sdk-extensions:
+#   - org.freedesktop.Sdk.Compat.i386
+#   - org.freedesktop.Sdk.Compat.i386.Debug
+
+# separate-locales: false
+# cleanup:
+#   - '*.a'
+#   - '*.la'
+#   - /share/doc
+#   - /share/man
+
+#   - /bin/function_grep.pl
+#   - /bin/widl
+#   - /bin/winecpp
+#   - /bin/winedump
+#   - /bin/wineg++
+#   - /bin/winegcc
+#   - /bin/winemaker
+#   - /bin/wmc
+#   - /bin/wrc
+#   - /include/wine
+#   - /lib/wine/*.def
+#   - /lib32/wine/*.def
+# cleanup-commands:
+#   - mkdir -p ${FLATPAK_DEST}/lib{,32}/ffmpeg
+
+# build-options:
+#   append-path: /usr/lib/sdk/mingw-w64/bin # Location of x86_64-w64-mingw32-gcc and i686-w64-minigw32-gcc compilers from sdk-extension org.freedesktop.Sdk.Extension.mingw-w64
+#   env:
+#     PERL5LIB: /app/lib/perl5/
+#     PERL_MM_OPT: INSTALL_BASE=/app
+
+# x-compat-i386-opts: &compat_i386_opts
+#   prepend-pkg-config-path: /app/lib32/pkgconfig:/usr/lib/i386-linux-gnu/pkgconfig
+#   # Some autotools-based builds will fail if -L/app/lib32 isn't first
+#   ldflags: -L/app/lib32 -Wl,-rpath-link=/app/lib32 -Wl,-z,relro,-z,now -Wl,--as-needed
+#   ldflags-override: true
+#   append-path: /usr/lib/sdk/toolchain-i386/bin
+#   env:
+#     CC: ccache i686-unknown-linux-gnu-gcc
+#     CXX: ccache i686-unknown-linux-gnu-g++
+#   libdir: /app/lib32
+
+modules:
+
+  - name: wine
+    buildsystem: simple
+    build-options:
+      arch:
+        x86_64:
+          append-path: /usr/lib/sdk/mingw-w64/bin:/usr/lib/sdk/toolchain-i386/bin # /usr/lib/sdk/mingw-w64/bin contains x86_64-w64-mingw32-gcc and i686-w64-minigw32-gcc compilers from sdk-extension org.freedesktop.Sdk.Extension.mingw-w64, and /usr/lib/sdk/toolchain-i386/bin contains gnu 32bit libs (needed for building the 32bit version of wine) from org.freedesktop.Sdk.Extension.toolchain-i386
+    sources:
+      - type: git
+        url: https://gitlab.winehq.org/wine/wine
+        tag: wine-10.0
+      - type: file
+        path: org.wine.Sdk.metainfo.xml
+      - type: file
+        path: org.wine.Platform.metainfo.xml
+    build-commands:
+      - |
+        mkdir wine64                                 # Make directory for building 64bit wine
+        mkdir wine32                                 # Make directory for building 32bit wine
+
+        cd wine64
+        ../configure                                `# Run wine configure file to generate makefile with following flags` \
+          --prefix=${FLATPAK_DEST}                  `# Set prefix to Flatpak root (/usr for an sdk)` \
+          --enable-win64                            `# Set flag to compile windows 64bit version` \
+          CC="ccache gcc"                           `# Compile C with gcc using ccache` \
+          CXX="ccache g++"                          `# Compile C++ with g++ using ccache` \
+          x86_64_CC="ccache x86_64-w64-mingw32-gcc" `# Cross-compile C with x86_64-w64-mingw32-gcc using ccache`
+        make -j`nproc --ignore=2`                    # Build 64bit wine using number of available cores minus 2
+        mkdir -p /usr/share/runtime/docs/man         # /usr/share/man symlinks here but it is not created by default and causes an error when make installing if not created beforehand
+        make install
+
+        cd ../wine32
+        ../configure                                `# Run wine configure file to generate makefile with following flags` \
+          --prefix=${FLATPAK_DEST}                  `# Set prefix to Flatpak root (/usr for an sdk)` \
+          --with-wine64=../wine64                   `# Use built 64bit wine above` \
+          CC="ccache i686-unknown-linux-gnu-gcc"    `# Compile C with gcc using ccache` \
+          CXX="ccache i686-unknown-linux-gnu-g++"   `# Compile C++ with g++ using ccache` \
+          x86_64_CC="ccache i686-w64-mingw32-gcc"   `# Cross-compile C with x86_64-w64-mingw32-gcc using ccache`
+        make -j`nproc --ignore=2`                    # Build 32bit wine using number of available cores minus 2
+        make install
+
+        # cd wine32
+        # ../configure                                `# Run wine configure file to generate makefile with following flags` \
+        #   --prefix=${FLATPAK_DEST}                  `# Set prefix to Flatpak root (/usr for an sdk)` \
+        #   CC="ccache i686-unknown-linux-gnu-gcc"    `# Compile C with gcc using ccache` \
+        #   CXX="ccache i686-unknown-linux-gnu-g++"   `# Compile C++ with g++ using ccache` \
+        #   x86_64_CC="ccache i686-w64-mingw32-gcc"   `# Cross-compile C with x86_64-w64-mingw32-gcc using ccache`
+        # make -j`nproc --ignore=2`                    # Build 32bit wine using number of available cores minus 2
+        # make install
+
+        cd ..
+        install -Dm644 org.wine.Sdk.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo
+        install -Dm644 org.wine.Platform.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo
