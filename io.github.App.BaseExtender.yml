@@ -1,0 +1,34 @@
+app-id: io.github.App.BaseExtender
+sdk: org.freedesktop.Sdk
+runtime: org.freedesktop.Platform
+runtime-version: &runtime-version '24.08'
+base: io.github.App
+command: BaseExtender
+rename-desktop-file: BaseExtender.desktop
+rename-icon: BaseExtender
+finish-args:
+  - --share=ipc
+  - --socket=x11
+  - --socket=wayland
+  - --device=all
+  - --socket=pulseaudio
+  - --share=network
+  - --allow=multiarch
+modules:
+  - name: BaseExtender
+    buildsystem: simple
+    sources:
+      - type: file
+        path: io.github.App.BaseExtender.metainfo.xml
+      - type: file
+        path: Icons/BaseExtender.png
+      - type: file
+        path: DesktopEntries/BaseExtender.desktop
+      - type: file
+        path: Scripts/BaseExtender
+    build-commands:
+      - |
+        install -Dm644 io.github.App.BaseExtender.metainfo.xml -t /app/share/metainfo
+        install -Dm644 BaseExtender.png -t /app/share/icons/hicolor/256x256/apps
+        install -Dm644 BaseExtender.desktop -t /app/share/applications
+        install -Dm744 BaseExtender -t /app/bin

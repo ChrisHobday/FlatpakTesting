@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Base Extender
+GenericName=BaseExtender
+Comment=A Flatpak test BaseExtender of a base app
+Exec=BaseExtender
+Icon=BaseExtender
+Keywords=BaseExtender;
