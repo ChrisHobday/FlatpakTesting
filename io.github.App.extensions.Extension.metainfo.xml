@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="addon">
+  <id>io.github.App.extensions.Extension</id>
+  <name>Extension</name>
+  <summary>A Flatpak test extension</summary>
+  <metadata_license>CC-BY-SA-3.0</metadata_license>
+  <project_license>GPL-2.0+</project_license>
+  <description>
+    <p>
+      A Flatpak test extension
+    </p>
+  </description>
+  <releases>
+    <release version="1" date="2025-02-18"/>
+  </releases>
+</component>

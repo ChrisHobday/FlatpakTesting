@@ -1,0 +1,22 @@
+id: io.github.App.extensions.Extension
+runtime: io.github.App
+sdk: org.freedesktop.Sdk//24.08
+build-extension: true
+modules:
+  - name: Test
+    buildsystem: simple
+    sources:
+      - type: file
+        path: io.github.App.extensions.Extension.metainfo.xml
+      - type: file
+        path: Icons/Extension.png
+      - type: file
+        path: DesktopEntries/Extension.desktop
+      - type: file
+        path: Scripts/Extension
+    build-commands:
+      - |
+        install -Dm644 io.github.App.extensions.Extension.metainfo.xml -t /app/extensions/Extension/share/metainfo
+        install -Dm644 Extension.png -t /app/extensions/Extension/share/icons/hicolor/256x256/apps
+        install -Dm644 Extension.desktop -t /app/extensions/Extension/share/applications
+        install -Dm744 Extension -t /app/extensions/Extension/bin
