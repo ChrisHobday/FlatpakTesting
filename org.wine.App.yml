@@ -46,8 +46,8 @@ add-extensions:
     enable-if: active-gl-driver
     autoprune-unless: active-gl-driver
 cleanup-commands:
-  - mkdir -p /app/lib/i386-linux-gnu
-  - mkdir -p /app/lib/debug/lib/i386-linux-gnu
+  - mkdir -p ${FLATPAK_DEST}/lib/i386-linux-gnu
+  - mkdir -p ${FLATPAK_DEST}/lib/debug/lib/i386-linux-gnu
 modules:
   - name: App
     buildsystem: simple
@@ -56,4 +56,4 @@ modules:
         path: org.wine.App.metainfo.xml
     build-commands:
       - |
-        install -Dm644 org.wine.App.metainfo.xml -t /app/share/metainfo
+        install -Dm644 org.wine.App.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo

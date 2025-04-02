@@ -229,19 +229,10 @@ modules:
         mkdir -p /usr/share/runtime/docs/man         # /usr/share/man symlinks here but it is not created by default and causes an error when make installing if not created beforehand
         make install
 
-        cd ../wine32
-        ../configure                                `# Run wine configure file to generate makefile with following flags` \
-          --prefix=${FLATPAK_DEST}                  `# Set prefix to Flatpak root (/usr for an sdk)` \
-          --with-wine64=../wine64                   `# Use built 64bit wine above` \
-          CC="ccache i686-unknown-linux-gnu-gcc"    `# Compile C with gcc using ccache` \
-          CXX="ccache i686-unknown-linux-gnu-g++"   `# Compile C++ with g++ using ccache` \
-          x86_64_CC="ccache i686-w64-mingw32-gcc"   `# Cross-compile C with x86_64-w64-mingw32-gcc using ccache`
-        make -j`nproc --ignore=2`                    # Build 32bit wine using number of available cores minus 2
-        make install
-
-        # cd wine32
+        # cd ../wine32
         # ../configure                                `# Run wine configure file to generate makefile with following flags` \
         #   --prefix=${FLATPAK_DEST}                  `# Set prefix to Flatpak root (/usr for an sdk)` \
+        #   --with-wine64=../wine64                   `# Use built 64bit wine above` \
         #   CC="ccache i686-unknown-linux-gnu-gcc"    `# Compile C with gcc using ccache` \
         #   CXX="ccache i686-unknown-linux-gnu-g++"   `# Compile C++ with g++ using ccache` \
         #   x86_64_CC="ccache i686-w64-mingw32-gcc"   `# Cross-compile C with x86_64-w64-mingw32-gcc using ccache`
