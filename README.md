@@ -15,6 +15,10 @@ flatpak-builder build-dir --repo=repo --force-clean io.github.App.BaseExtender.y
 ```
 ---
 ```console
+flatpak-builder build-dir --repo=repo --force-clean io.github.Sdk.yml
+```
+---
+```console
 flatpak-builder build-dir --repo=repo --ccache --force-clean org.wine.Sdk.yml
 ```
 ---
@@ -41,4 +45,8 @@ flatpak install io.github.App.BaseExtender
 ---
 ```console
 flatpak install org.wine.App
+```
+## Removing repo
+```console
+flatpak remote-delete repo
 ```

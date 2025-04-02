@@ -1,0 +1,23 @@
+build-runtime: true
+id: io.github.Sdk
+id-platform: io.github.Platform
+branch: &app-version '1'
+sdk: org.freedesktop.Sdk
+runtime: org.freedesktop.Platform
+runtime-version: &runtime-version '24.08'
+finish-args:
+  - --sdk=io.github.Sdk//1
+  - --runtime=io.github.Platform//1
+  - --allow=multiarch
+modules:
+  - name: Sdk
+    buildsystem: simple
+    sources:
+      - type: file
+        path: io.github.Sdk.metainfo.xml
+      - type: file
+        path: io.github.Platform.metainfo.xml
+    build-commands:
+      - |
+        install -Dm644 io.github.Sdk.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo
+        install -Dm644 io.github.Platform.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo
