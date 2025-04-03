@@ -18,6 +18,7 @@ flatpak-builder build-dir --repo=repo --force-clean io.github.App.BaseExtender.y
 flatpak-builder build-dir --repo=repo --force-clean io.github.Sdk.yml
 ```
 ---
+> **_NOTE:_**  With org.freedesktop.Sdk.Debug, org.freedesktop.Sdk.Locale, org.freedesktop.Sdk.Docs, org.freedesktop.Sdk.Compat.i386, org.freedesktop.Sdk.Extension.toolchain-i386, org.freedesktop.Sdk.Extension.mingw-w64 and org.freedesktop.Platform.Locale installed.
 ```console
 flatpak-builder build-dir --repo=repo --ccache --force-clean org.wine.Sdk.yml
 ```
