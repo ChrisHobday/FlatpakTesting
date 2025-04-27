@@ -1,7 +1,7 @@
 app-id: io.github.App.BaseExtender
-sdk: org.freedesktop.Sdk
-runtime: org.freedesktop.Platform
-runtime-version: &runtime-version '24.08'
+sdk: io.github.Sdk
+runtime: io.github.Platform
+runtime-version: '1'
 base: io.github.App
 command: BaseExtender
 rename-desktop-file: BaseExtender.desktop

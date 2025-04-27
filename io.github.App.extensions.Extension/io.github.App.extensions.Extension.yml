@@ -1,6 +1,6 @@
 id: io.github.App.extensions.Extension
 runtime: io.github.App
-sdk: org.freedesktop.Sdk//24.08
+sdk: io.github.Sdk//1
 build-extension: true
 modules:
   - name: Test
