@@ -1,6 +1,6 @@
 # A Flatpak App for testing
-> **_NOTE:_**  With io.github.Sdk installed.
 ## Building
+> **_NOTE:_**  With io.github.Sdk installed.
 ```console
 flatpak run org.flatpak.Builder build-dir --repo=../repo --force-clean io.github.App.yml
 ```
