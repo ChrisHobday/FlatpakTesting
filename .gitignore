@@ -8,7 +8,7 @@
 /build-dir
 
 # GPG Key
-./GPGKey.txt
+GPGKey.txt
 
 # Flatpak repo
 # /repo
