@@ -1,0 +1,113 @@
+build-runtime: true
+id: io.github.Sdk
+id-platform: io.github.Platform
+branch: &app-version '1'
+sdk: org.freedesktop.Sdk
+runtime: org.freedesktop.Platform
+runtime-version: &runtime-version '24.08'
+finish-args:
+  - --sdk=io.github.Sdk//1
+  - --runtime=io.github.Platform//1
+  
+inherit-extensions:
+  # Re-export org.freedesktop.Platform extensions for child Apps to inherit
+  - org.freedesktop.Platform.GL          # OpenGL
+  - org.freedesktop.Platform.VAAPI.Intel # Intel VAAPI
+  - org.freedesktop.Platform.VulkanLayer
+  - org.freedesktop.Platform.Timezones
+  - org.freedesktop.Platform.GStreamer
+  - org.freedesktop.Platform.openh264
+  - org.freedesktop.Platform.Icontheme
+# inherit-sdk-extensions:
+  # - org.freedesktop.Sdk.Extension
+
+add-extensions:
+  # Re-export org.freedesktop.Platform extensions for child Apps to inherit
+  org.freedesktop.Platform.Compat.i386:       # 32bit Linux compatibility
+    directory: lib/i386-linux-gnu
+    version: *runtime-version
+
+  org.freedesktop.Platform.Compat.i386.Debug: # 32bit Linux compatibility debug
+    directory: lib/debug/lib/i386-linux-gnu
+    version: *runtime-version
+    no-autodownload: true
+
+  org.freedesktop.Platform.GL32:              # 32bit OpenGL
+    directory: lib/i386-linux-gnu/GL
+    version: '1.4'
+    versions: 24.08;1.4
+    subdirectories: true
+    no-autodownload: true
+    autodelete: false
+    add-ld-path: lib
+    merge-dirs: vulkan/icd.d;glvnd/egl_vendor.d;egl/egl_external_platform.d;OpenCL/vendors;lib/dri;lib/d3d;lib/gbm;vulkan/explicit_layer.d;vulkan/implicit_layer.d
+    download-if: active-gl-driver
+    enable-if: active-gl-driver
+    autoprune-unless: active-gl-driver
+
+  org.freedesktop.Platform.GL32.Debug:        # 32bit OpenGL Debug
+    directory: lib/debug/lib/i386-linux-gnu/GL
+    version: '1.4'
+    versions: 24.08;1.4
+    subdirectories: true
+    no-autodownload: true
+    merge-dirs: vulkan/icd.d;glvnd/egl_vendor.d;egl/egl_external_platform.d;OpenCL/vendors;lib/dri;lib/d3d;lib/gbm;vulkan/explicit_layer.d;vulkan/implicit_layer.d
+    enable-if: active-gl-driver
+    autoprune-unless: active-gl-driver
+
+  org.freedesktop.Platform.VAAPI.Intel.i386:  # 32bit Intel VAAPI
+    directory: lib/i386-linux-gnu/dri/intel-vaapi-driver
+    version: *runtime-version
+    versions: *runtime-version
+    autodelete: false
+    no-autodownload: true
+    add-ld-path: lib
+    download-if: have-intel-gpu
+    autoprune-unless: have-intel-gpu
+
+  org.freedesktop.Platform.ffmpeg-full:       # FFmpeg
+    directory: lib/ffmpeg
+    add-ld-path: .
+    version: *runtime-version
+    autodelete: false
+
+  org.freedesktop.Platform.ffmpeg_full.i386:  # 32bit FFmpeg
+    directory: lib32/ffmpeg
+    add-ld-path: .
+    version: *runtime-version
+    autodelete: false
+
+# cleanup-commands:
+  # - /usr/libexec/freedesktop-post.sh                         # Pre-packaged script that sets up stuff (Not sure if still required)
+
+# cleanup-platform-commands:
+  # - /usr/libexec/freedesktop-post.sh # Pre-packaged script that sets up stuff (Not sure if still required)
+
+modules:
+  # Setting up required stuff
+  - name: Setup
+    buildsystem: simple
+    build-commands:
+      - |
+      
+        # Make directories needed by extensions
+        mkdir -p ${FLATPAK_DEST}/lib/i386-linux-gnu              # 32bit Linux compatibility
+        mkdir -p ${FLATPAK_DEST}/lib/debug/lib/i386-linux-gnu    # 32bit Linux compatibility debug
+        mkdir -p ${FLATPAK_DEST}/lib/debug/lib/i386-linux-gnu/GL # 32bit OpenGL Debug
+        mkdir -p ${FLATPAK_DEST}/lib/ffmpeg                      # FFmpeg
+        mkdir -p ${FLATPAK_DEST}/lib32/ffmpeg                    # 32bit FFmpeg
+
+        # Make directories needed by modules
+        mkdir -p /usr/share/runtime/docs/man                     # /usr/share/man symlinks here but it is not created by default and causes an errors when building modules
+
+  - name: Sdk
+    buildsystem: simple
+    sources:
+      - type: file
+        path: io.github.Sdk.metainfo.xml
+      - type: file
+        path: io.github.Platform.metainfo.xml
+    build-commands:
+      - |
+        install -Dm644 io.github.Sdk.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo
+        install -Dm644 io.github.Platform.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo

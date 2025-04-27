@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<component type="runtime">
-    <id>io.github.Sdk</id>
-    <name>Sdk</name>
-    <summary>A Flatpak test Sdk</summary>
-</component>

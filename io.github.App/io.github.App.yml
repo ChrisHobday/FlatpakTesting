@@ -1,0 +1,66 @@
+app-id: io.github.App
+sdk: io.github.Sdk
+runtime: io.github.Platform
+runtime-version: '1'
+rename-desktop-file: App.desktop
+rename-icon: App
+command: App
+finish-args:
+  - --share=ipc
+  - --socket=x11
+  - --socket=wayland
+  - --device=all
+  - --socket=pulseaudio
+  - --share=network
+  - --allow=multiarch
+  
+inherit-extensions:
+  - org.freedesktop.Platform.GL32
+  - org.freedesktop.Platform.ffmpeg-full
+  - org.freedesktop.Platform.ffmpeg_full.i386
+
+add-extensions:
+  io.github.App.extensions:
+    directory: extensions
+    add-ld-path: lib
+    merge-dirs: plug-ins;help
+    subdirectories: true
+    no-autodownload: true
+    autodelete: true
+
+cleanup-commands:
+  - mkdir -p /app/extensions
+
+modules:
+  # Setting up required stuff
+  - name: Setup
+    buildsystem: simple
+    build-commands:
+      - |
+        # Make directories needed by child apps for extensions
+        mkdir -p /app/lib/i386-linux-gnu                        # 32bit Linux compatibility
+        mkdir -p /app/lib/debug/lib/i386-linux-gnu              # 32bit Linux compatibility debug
+        mkdir -p /app/lib/x86_64-linux-gnu/GL                   # OpenGL
+        mkdir -p /app/lib/i386-linux-gnu/GL                     # 32bit OpenGL
+        mkdir -p /app/lib/debug/lib/i386-linux-gnu/GL           # 32bit OpenGL Debug
+        mkdir -p /app/lib/i386-linux-gnu/dri/intel-vaapi-driver # 32bit Intel VAAPI
+        mkdir -p /app/lib/ffmpeg                                # FFmpeg
+        mkdir -p /app/lib32/ffmpeg                              # 32bit FFmpeg
+
+  - name: App
+    buildsystem: simple
+    sources:
+      - type: file
+        path: io.github.App.metainfo.xml
+      - type: file
+        path: Icons/App.png
+      - type: file
+        path: DesktopEntries/App.desktop
+      - type: file
+        path: Scripts/App
+    build-commands:
+      - |
+        install -Dm644 io.github.App.metainfo.xml -t /app/share/metainfo
+        install -Dm644 App.png -t /app/share/icons/hicolor/256x256/apps
+        install -Dm644 App.desktop -t /app/share/applications
+        install -Dm744 App -t /app/bin
