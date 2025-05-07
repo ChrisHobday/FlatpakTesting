@@ -13,7 +13,7 @@ finish-args:
   - --socket=pulseaudio
   - --share=network
   - --allow=multiarch
-  
+
 inherit-extensions:
   - org.freedesktop.Platform.GL32
   - org.freedesktop.Platform.ffmpeg-full
@@ -48,11 +48,11 @@ modules:
         mkdir -p /app/lib32/ffmpeg                              # 32bit FFmpeg
 
   - name: ExternalCheckerDataTest
-    sources: 
+    sources:
       - type: git
         url: https://gitlab.winehq.org/wine/wine
-        tag: wine-10.0
-        commit: b073859675060c9211fcbccfd90e4e87520dc2c2
+        tag: wine-10.7
+        commit: 71c6c3dd6dcfffc040aa5a10a825eeb8e17f6299
         x-checker-data: # Checks for a newer version when org.flathub.flatpak-external-data-checker is ran on this file
           type: git
           tag-pattern: ^wine-(\d+\.\d+)$ # Regex pattern that matches latest git tag and compares it to source
