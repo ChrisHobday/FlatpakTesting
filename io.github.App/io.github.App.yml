@@ -47,8 +47,21 @@ modules:
         mkdir -p /app/lib/ffmpeg                                # FFmpeg
         mkdir -p /app/lib32/ffmpeg                              # 32bit FFmpeg
 
-  - name: App
+  - name: ExternalCheckerDataTest
+    sources: 
+      - type: git
+        url: https://gitlab.winehq.org/wine/wine
+        tag: wine-10.0
+        x-checker-data: # Checks for a newer version when org.flathub.flatpak-external-data-checker is ran on this file
+          type: git
+          tag-pattern: ^wine-(\d+\.\d+)$ # Regex pattern that matches latest git tag and compares it to source
+          is-main-source: true
     buildsystem: simple
+    build-commands:
+      - |
+        echo "Nothing"
+
+  - name: App
     sources:
       - type: file
         path: io.github.App.metainfo.xml
@@ -58,6 +71,7 @@ modules:
         path: DesktopEntries/App.desktop
       - type: file
         path: Scripts/App
+    buildsystem: simple
     build-commands:
       - |
         install -Dm644 io.github.App.metainfo.xml -t /app/share/metainfo

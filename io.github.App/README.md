@@ -15,3 +15,8 @@ flatpak install --user ./repo io.github.App
 ```console
 flatpak remove io.github.App
 ```
+## Updating External Data
+> **_NOTE:_**  With org.flathub.flatpak-external-data-checker installed.
+```console
+flatpak run org.flathub.flatpak-external-data-checker --update ./io.github.App.yml
+```
