@@ -56,7 +56,7 @@ modules:
         x-checker-data: # Checks for a newer version when org.flathub.flatpak-external-data-checker is ran on this file
           type: git
           tag-pattern: ^wine-(\d+\.\d+)$ # Regex pattern that matches latest git tag and compares it to source
-          is-main-source: true
+          # is-main-source: true           # Uses this sources version are the release version in metainfo file
     buildsystem: simple
     build-commands:
       - |
