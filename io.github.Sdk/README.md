@@ -1,20 +1,19 @@
 # A Flatpak SDK for testing
-## Required Packages
-```console
-flatpak install org.freedesktop.Sdk//24.08 org.freedesktop.Platform//24.08
-```
----
 ## Building
+> **_NOTE:_**  With org.freedesktop.Sdk and org.freedesktop.Platform installed.
 ```console
 flatpak run org.flatpak.Builder build-dir --repo=../repo --force-clean io.github.Sdk.yml
 ```
----
-## Installing Locally
-> **_NOTE:_**  From the directory above this
+## Installing
+### Locally
 ```console
-flatpak install --user ./repo io.github.Sdk io.github.Platform
+flatpak install --user ../repo io.github.Sdk io.github.Platform
 ```
----
+### Remote
+> **_NOTE:_**  With https://chrishobday.github.io/FlatpakTesting/repo.flatpakrepo added
+```console
+flatpak install --user io.github.Sdk io.github.Platform
+```
 ## Removing
 ```console
 flatpak remove io.github.Sdk io.github.Platform

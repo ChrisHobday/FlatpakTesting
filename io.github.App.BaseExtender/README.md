@@ -1,6 +1,6 @@
 # A Flatpak App Base Extender for testing
-> **_NOTE:_**  With io.github.Sdk and io.github.App installed.
 ## Building
+> **_NOTE:_**  With io.github.Sdk and io.github.App installed.
 ```console
 flatpak run org.flatpak.Builder build-dir --repo=../repo --force-clean io.github.App.BaseExtender.yml
 ```

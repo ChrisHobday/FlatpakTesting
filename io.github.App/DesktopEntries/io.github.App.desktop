@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=App
+GenericName=App
+Comment=A Flatpak Test App
+Exec=App.sh
+Icon=io.github.App
+Keywords=App;

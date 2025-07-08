@@ -4,13 +4,15 @@
 ```console
 flatpak run org.flatpak.Builder build-dir --repo=../repo --force-clean io.github.App.yml
 ```
----
-## Installing Locally
-> **_NOTE:_**  From the directory above this
+## Installing
+### Locally
 ```console
-flatpak install --user ./repo io.github.App
+flatpak install --user ../repo io.github.App
 ```
----
+### Remote
+```console
+flatpak install --user io.github.App
+```
 ## Removing
 ```console
 flatpak remove io.github.App

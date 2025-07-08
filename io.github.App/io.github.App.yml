@@ -1,24 +1,42 @@
 app-id: io.github.App
+# branch: testing                    # Set branch for testing purposes (Default branch is master)
 sdk: io.github.Sdk
 runtime: io.github.Platform
 runtime-version: '1'
-rename-desktop-file: App.desktop
-rename-icon: App
-command: App
+# rename-desktop-file: App.desktop # Not needed because desktop file is already in reversed domain name format
+# rename-icon: App                 # Not needed because icons are already in reversed domain name format
+command: App.sh
 finish-args:
-  - --share=ipc
-  - --socket=x11
-  - --socket=wayland
-  - --device=all
-  - --socket=pulseaudio
-  - --share=network
-  - --allow=multiarch
-  
+  - --allow=multiarch                                      # Access to 32bit libraries (For running 32bit executables)
+  # - --allow=devel                                          # Uses full SDK as the runtime (Access to more debugging tools and other libs)
+  # - --allow=bluetooth                                      # Access to bluetooth
+  # - --device=all                                           # Access to all devices
+  - --device=dri                                           # Access to DRI for OpenGL rendering
+  - --device=input                                         # Access to input devices (Controllers, etc)
+  # - --socket=wayland                                       # Access to Wayland socket for display
+  - --socket=fallback-x11                                  # Access to X11 socket for display (Incase wayland doesn't work)
+  - --socket=pulseaudio                                    # Access to pulse audio socket for sound
+  - --share=network                                        # Access to networking
+  - --share=ipc                                            # Access to host IPC namespace
+  - --talk-name=org.freedesktop.ScreenSaver                # Can talk to Screensaver (Allows preventing Screensaver)
+  # - --system-talk-name=org.freedesktop.UDisks2             # Can manage storage devices directly
+  # - --system-talk-name=org.freedesktop.NetworkManager      # Can manage network directly
+  # - --filesystem=host:ro                                   # Read access to common host directories
+  - --filesystem=xdg-run/app/com.discordapp.Discord:create # Read/write access to Discord's running instance (Required for setting up Discord rich presence)
+  # - --filesystem=xdg-run/discord-ipc-0:create              # Read/Write access to Discord's IPC socket (Required for setting up Discord rich presence)
+  - --filesystem=xdg-run/gamescope-0:ro                    # Read access to Gamescope's running instance (Required for Gamescope on Steam Deck)
+  # - --env=WINEARCH=win32                                   # Set Wine to 32bit mode (64bit mode is default)
+  # - --env=WINEPREFIX=/var/data/wine                        # Set prefix location
 inherit-extensions:
-  - org.freedesktop.Platform.GL32
-  - org.freedesktop.Platform.ffmpeg-full
-  - org.freedesktop.Platform.ffmpeg_full.i386
-
+  - org.freedesktop.Platform.Compat.i386       # 32bit Linux compatibility
+  - org.freedesktop.Platform.Compat.i386.Debug # 32bit Linux compatibility debug
+  - org.freedesktop.Platform.GL                # OpenGL
+  - org.freedesktop.Platform.GL32              # 32bit OpenGL
+  - org.freedesktop.Platform.GL32.Debug        # 32bit OpenGL Debug
+  - org.freedesktop.Platform.VAAPI.Intel       # Intel VAAPI
+  - org.freedesktop.Platform.VAAPI.Intel.i386  # 32bit Intel VAAPI
+  - org.freedesktop.Platform.ffmpeg-full       # FFmpeg
+  - org.freedesktop.Platform.ffmpeg_full.i386  # 32bit FFmpeg
 add-extensions:
   io.github.App.extensions:
     directory: extensions
@@ -27,25 +45,26 @@ add-extensions:
     subdirectories: true
     no-autodownload: true
     autodelete: true
-
-cleanup-commands:
-  - mkdir -p /app/extensions
-
 modules:
   # Setting up required stuff
   - name: Setup
     buildsystem: simple
     build-commands:
       - |
-        # Make directories needed by child apps for extensions
-        mkdir -p /app/lib/i386-linux-gnu                        # 32bit Linux compatibility
-        mkdir -p /app/lib/debug/lib/i386-linux-gnu              # 32bit Linux compatibility debug
-        mkdir -p /app/lib/x86_64-linux-gnu/GL                   # OpenGL
-        mkdir -p /app/lib/i386-linux-gnu/GL                     # 32bit OpenGL
-        mkdir -p /app/lib/debug/lib/i386-linux-gnu/GL           # 32bit OpenGL Debug
-        mkdir -p /app/lib/i386-linux-gnu/dri/intel-vaapi-driver # 32bit Intel VAAPI
-        mkdir -p /app/lib/ffmpeg                                # FFmpeg
-        mkdir -p /app/lib32/ffmpeg                              # 32bit FFmpeg
+        # Make directories needed by extensions
+        mkdir -p ${FLATPAK_DEST}/lib/i386-linux-gnu                        # 32bit Linux compatibility
+        mkdir -p ${FLATPAK_DEST}/lib/debug/lib/i386-linux-gnu              # 32bit Linux compatibility debug
+        mkdir -p ${FLATPAK_DEST}/lib/x86_64-linux-gnu/GL                   # OpenGL
+        mkdir -p ${FLATPAK_DEST}/lib/i386-linux-gnu/GL                     # 32bit OpenGL
+        mkdir -p ${FLATPAK_DEST}/lib/debug/lib/i386-linux-gnu/GL           # 32bit OpenGL Debug
+        mkdir -p ${FLATPAK_DEST}/lib/i386-linux-gnu/dri/intel-vaapi-driver # 32bit Intel VAAPI
+        mkdir -p ${FLATPAK_DEST}/lib/ffmpeg                                # FFmpeg
+        mkdir -p ${FLATPAK_DEST}/lib32/ffmpeg                              # 32bit FFmpeg
+        mkdir -p ${FLATPAK_DEST}/extensions
+
+        mkdir -p ${FLATPAK_DEST}/bin                                                                               # Make directory needed for binaries
+        mkdir -p ${FLATPAK_DEST}/share/applications/                                                               # Make directory for desktop files
+        mkdir -p ${FLATPAK_DEST}/share/icons/hicolor/{16x16,24x24,32x32,48x48,64x64,128x128,256x256,scalable}/apps # Make directories needed for icons
 
   - name: ExternalCheckerDataTest
     sources: 
@@ -66,16 +85,19 @@ modules:
     sources:
       - type: file
         path: io.github.App.metainfo.xml
+
       - type: file
-        path: Icons/App.png
+        path: Icons/io.github.App.png
+
       - type: file
-        path: DesktopEntries/App.desktop
+        path: DesktopEntries/io.github.App.desktop
+        
       - type: file
-        path: Scripts/App
+        path: Scripts/App.sh
     buildsystem: simple
     build-commands:
       - |
         install -Dm644 io.github.App.metainfo.xml -t /app/share/metainfo
-        install -Dm644 App.png -t /app/share/icons/hicolor/256x256/apps
-        install -Dm644 App.desktop -t /app/share/applications
-        install -Dm744 App -t /app/bin
+        install -Dm644 io.github.App.png -t /app/share/icons/hicolor/256x256/apps
+        install -Dm644 io.github.App.desktop -t /app/share/applications
+        install -Dm744 App.sh -t /app/bin

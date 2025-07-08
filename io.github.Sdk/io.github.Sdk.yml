@@ -8,7 +8,6 @@ runtime-version: &runtime-version '24.08'
 finish-args:
   - --sdk=io.github.Sdk//1
   - --runtime=io.github.Platform//1
-  
 inherit-extensions:
   # Re-export org.freedesktop.Platform extensions for child Apps to inherit
   - org.freedesktop.Platform.GL          # OpenGL
@@ -20,7 +19,6 @@ inherit-extensions:
   - org.freedesktop.Platform.Icontheme
 # inherit-sdk-extensions:
   # - org.freedesktop.Sdk.Extension
-
 add-extensions:
   # Re-export org.freedesktop.Platform extensions for child Apps to inherit
   org.freedesktop.Platform.Compat.i386:       # 32bit Linux compatibility
@@ -76,20 +74,16 @@ add-extensions:
     add-ld-path: .
     version: *runtime-version
     autodelete: false
-
 # cleanup-commands:
   # - /usr/libexec/freedesktop-post.sh                         # Pre-packaged script that sets up stuff (Not sure if still required)
-
 # cleanup-platform-commands:
   # - /usr/libexec/freedesktop-post.sh # Pre-packaged script that sets up stuff (Not sure if still required)
-
 modules:
   # Setting up required stuff
   - name: Setup
     buildsystem: simple
     build-commands:
       - |
-      
         # Make directories needed by extensions
         mkdir -p ${FLATPAK_DEST}/lib/i386-linux-gnu              # 32bit Linux compatibility
         mkdir -p ${FLATPAK_DEST}/lib/debug/lib/i386-linux-gnu    # 32bit Linux compatibility debug
@@ -105,6 +99,7 @@ modules:
     sources:
       - type: file
         path: io.github.Sdk.metainfo.xml
+
       - type: file
         path: io.github.Platform.metainfo.xml
     build-commands:
