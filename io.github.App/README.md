@@ -10,8 +10,9 @@ flatpak run org.flatpak.Builder build-dir --repo=../repo --force-clean io.github
 flatpak install --user ../repo io.github.App
 ```
 ### Remote
+> **_NOTE:_**  With https://chrishobday.github.io/FlatpakTesting/repo.flatpakrepo added
 ```console
-flatpak install --user io.github.App
+flatpak install io.github.App
 ```
 ## Removing
 ```console

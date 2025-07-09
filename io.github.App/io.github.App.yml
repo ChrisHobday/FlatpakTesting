@@ -66,38 +66,100 @@ modules:
         mkdir -p ${FLATPAK_DEST}/share/applications/                                                               # Make directory for desktop files
         mkdir -p ${FLATPAK_DEST}/share/icons/hicolor/{16x16,24x24,32x32,48x48,64x64,128x128,256x256,scalable}/apps # Make directories needed for icons
 
-  - name: ExternalCheckerDataTest
-    sources: 
-      - type: git
-        url: https://gitlab.winehq.org/wine/wine
-        tag: wine-10.0
-        commit: b073859675060c9211fcbccfd90e4e87520dc2c2
-        x-checker-data: # Checks for a newer version when org.flathub.flatpak-external-data-checker is ran on this file
-          type: git
-          tag-pattern: ^wine-(\d+\.\d+)$ # Regex pattern that matches latest git tag and compares it to source
-          # is-main-source: true           # Uses this sources version are the release version in metainfo file
-    buildsystem: simple
-    build-commands:
-      - |
-        echo "Nothing"
-
   - name: App
     sources:
-      - type: file
-        path: io.github.App.metainfo.xml
+      # # NOTE: These executables are already downloaded alongside this manifest
+      # # Executable that tests the 32bit capabilities of the installed Wine (io.github.Sdk)
+      # - type: file
+      #   path: Executables/winetest.exe
 
-      - type: file
-        path: Icons/io.github.App.png
+      # # Executable that tests the 64bit capabilities of the installed Wine (io.github.Sdk)
+      # - type: file
+      #   path: Executables/winetest64.exe
 
+      # # NOTE: These executables are downloaded when Flatpak builder is ran on this file
+      # # Executable that tests the 32bit capabilities of the installed Wine (io.github.Sdk)
+      # - type: file
+      #   url: https://gitlab.winehq.org/wine/wine/-/jobs/161893/artifacts/raw/winetest.exe
+      #   sha256: 7955d7e783806063fb4c263dc7a1394236141980f7c96a3110baa24b12f541f4          # Hash that is used to confirm the correct file was downloaded
+
+      # # Executable that tests the 64bit capabilities of the installed Wine (io.github.Sdk)
+      # - type: file
+      #   url: https://gitlab.winehq.org/wine/wine/-/jobs/161893/artifacts/raw/winetest64.exe
+      #   sha256: f7eb761d69a294ec4f9f8bf1142731a9a189a638cf047f822846effd9754ba1b            # Hash that is used to confirm the correct file was downloaded
+
+      # NOTE: These files are downloaded when the user installs this Flatpak, and are not included in the Flatpak when it is built. This is necessary to avoid redistributing copyrighted materials or very large files
+      # Executable that tests the 32bit capabilities of the installed Wine (io.github.Sdk) (Downloaded to /app/extra when user is installing because of extra-data)
+      - type: extra-data
+        url: https://gitlab.winehq.org/wine/wine/-/jobs/161893/artifacts/raw/winetest.exe
+        sha256: 7955d7e783806063fb4c263dc7a1394236141980f7c96a3110baa24b12f541f4          # Hash that is used to confirm the correct file was downloaded
+        size: 71634800                                                                    # Size of executable (Found with "wc --bytes < filename")
+        filename: winetest.exe
+
+      # Executable that tests the 64bit capabilities of the installed Wine (io.github.Sdk) (Downloaded to /app/extra when user is installing because of extra-data)
+      - type: extra-data
+        url: https://gitlab.winehq.org/wine/wine/-/jobs/161893/artifacts/raw/winetest64.exe
+        sha256: f7eb761d69a294ec4f9f8bf1142731a9a189a638cf047f822846effd9754ba1b            # Hash that is used to confirm the correct file was downloaded
+        size: 69053414                                                                      # Size of executable (Found with "wc --bytes < winetest64.exe")
+        filename: winetest64.exe
+
+      # Script that is automatically ran when user is installing, after extra-data is downloaded
+      - type: script
+        dest-filename: apply_extra # This specific name is needed
+        commands:
+          - |
+            # NOTE: ${FLATPAK_DEST} is not available here because this is ran after the Flatpak is built, while the user is installing
+            wrestool -x --output=WineTest.ico -t14 winetest.exe # Extract ico from exe (Uses Icoutils module from io.github.Sdk)
+            magick WineTest.ico WineTest.png                    # Convert ico to png (Uses ImageMagick module from io.github.Sdk) (This can extract 1 or many pngs with possibly different icons and not always labeled in order of resolution, therefore it takes some trial and error to find out which resolution icon is named what)
+            magick WineTest.ico WineTest.svg                    # Convert ico to svg (Uses ImageMagick + potrace module from io.github.Sdk) TODO: Find a way to convert to SVG without loosing color
+
+            # Resize icon to missing standard Linux icon sizes (Uses ImageMagick module from io.github.Sdk)
+            magick WineTest-0.png -resize 128x128 WineTest128x128.png
+            magick WineTest-0.png -resize 64x64 WineTest64x64.png
+            magick WineTest-0.png -resize 24x24 WineTest24x24.png
+            magick WineTest-0.png -resize 16x16 WineTest16x16.png
+
+            # Install icons to appropriate directories
+            install -Dm644 WineTest-0.png ./export/share/icons/hicolor/256x256/apps/io.github.App.png
+            install -Dm644 WineTest128x128.png ./export/share/icons/hicolor/128x128/apps/io.github.App.png
+            install -Dm644 WineTest64x64.png ./export/share/icons/hicolor/64x64/apps/io.github.App.png
+            install -Dm644 WineTest-3.png ./export/share/icons/hicolor/48x48/apps/io.github.App.png
+            install -Dm644 WineTest-2.png ./export/share/icons/hicolor/32x32/apps/io.github.App.png
+            install -Dm644 WineTest24x24.png ./export/share/icons/hicolor/24x24/apps/io.github.App.png
+            install -Dm644 WineTest16x16.png ./export/share/icons/hicolor/16x16/apps/io.github.App.png
+            install -Dm644 WineTest.svg ./export/share/icons/hicolor/scalable/apps/io.github.App.svg
+
+      # Windows registry file that can be used to set needed registry keys of a Wine prefix
       - type: file
-        path: DesktopEntries/io.github.App.desktop
-        
+        path: Registry/WineGraphics.reg
+
+      # Script that will act as the launch command when the Flatpak starts (Specified above with the command option)
       - type: file
         path: Scripts/App.sh
-    buildsystem: simple
+
+      # Scalable icon that will show up in user's App menus, on taskbars, and in storefronts
+      - type: file
+        path: Icons/io.github.svg
+
+      # Desktop file that will be installed below, then exported by Flatpak and appear in user's App menus
+      - type: file
+        path: DesktopEntries/io.github.App.desktop
+
+      # Metadata file about this Flatpak that determines things like the version, and is used by storefronts
+      - type: file
+        path: io.github.App.metainfo.xml
+    buildsystem: simple # Uses the series of bash commands specified below to build
     build-commands:
       - |
-        install -Dm644 io.github.App.metainfo.xml -t /app/share/metainfo
-        install -Dm644 io.github.App.png -t /app/share/icons/hicolor/256x256/apps
-        install -Dm644 io.github.App.desktop -t /app/share/applications
-        install -Dm744 App.sh -t /app/bin
+        # NOTE: -Dm744 installs with execute permission, while -Dm644 does not
+        # NOTE: ${FLATPAK_DEST} maps to /app here, because this is an app
+        # install -Dm744 winetest.exe -t ${FLATPAK_DEST}/bin                                    # Install executable
+        # install -Dm744 winetest64.exe -t ${FLATPAK_DEST}/bin                                  # Install executable
+        ln -s ${FLATPAK_DEST}/extra/winetest.exe ${FLATPAK_DEST}/bin/winetest.exe             # Symlink to executable that will be downloaded with extra-data when user installs
+        ln -s ${FLATPAK_DEST}/extra/winetest64.exe ${FLATPAK_DEST}/bin/winetest64.exe         # Symlink to executable that will be downloaded with extra-data when user installs
+        install -Dm744 apply_extra -t ${FLATPAK_DEST}/bin/                                    # Install script that will be ran automatically when user installs, after extra-data sources are downloaded
+        install -Dm644 WineGraphics.reg -t ${FLATPAK_DEST}/share/                             # Install Windows registry keys that will be applied to Wine prefix later
+        install -Dm744 App.sh -t ${FLATPAK_DEST}/bin/                                         # Install script that will act as the launch command when the Flatpak starts
+        install -Dm644 io.github.App.svg -t ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/ # Install icon (NOTE: We install in scalable because the icon is an SVG, if it was a PNG we'd have to install in the appropriate resolution directory, for example 256x256)
+        install -Dm644 io.github.App.desktop -t ${FLATPAK_DEST}/share/applications/            # Install desktop file that will be exported for desktop environments to use in their App menus
+        install -Dm644 io.github.App.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo            # Install metainfo

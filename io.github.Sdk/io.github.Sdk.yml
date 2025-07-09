@@ -91,8 +91,71 @@ modules:
         mkdir -p ${FLATPAK_DEST}/lib/ffmpeg                      # FFmpeg
         mkdir -p ${FLATPAK_DEST}/lib32/ffmpeg                    # 32bit FFmpeg
 
-        # Make directories needed by modules
-        mkdir -p /usr/share/runtime/docs/man                     # /usr/share/man symlinks here but it is not created by default and causes an errors when building modules
+        # Make docs directories needed by modules
+        mkdir -p /usr/share/runtime/docs/man                     # /usr/share/man symlinks here but it is not created by default and can cause errors when building modules
+        mkdir -p /usr/share/runtime/docs/info                    # /usr/share/info symlinks here but it is not created by default and can cause errors when building modules
+        mkdir -p /usr/share/runtime/docs/doc                     # /usr/share/doc symlinks here but it is not created by default and can cause errors when building modules
+        mkdir -p /usr/share/runtime/docs/ri                      # /usr/share/ri symlinks here but it is not created by default and can cause errors when building modules
+
+        # Make locale directories needed by modules
+        pushd /usr/share/locale                                  # Change to /usr/share/locale directory, and store current directory to be popd back to below
+        for link in `find . -type l`; do                         # For each symlink in /usr/share/locale
+          mkdir -p $(readlink  $link)                            # Make the directory the symlink is pointing to (If it doesn't already exist)
+        done
+        popd                                                     # Change back to starting directory (location where last pushd was used above)
+
+  # For extracting icons from exes
+  - name: icoutils
+    sources:
+      - type: archive
+        url: https://download.savannah.gnu.org/releases/icoutils/icoutils-0.32.3.tar.bz2
+        sha256: 17abe02d043a253b68b47e3af69c9fc755b895db68fdc8811786125df564c6e0
+        x-checker-data: # Checks for a newer version when org.flathub.flatpak-external-data-checker is ran on this file
+          type: html
+          url: https://download.savannah.gnu.org/releases/icoutils/ # Use this file to...
+          pattern: (icoutils-(\d[\d\.]+\d).tar.bz2)                 # Search for this regex pattern and compare it to source to see if there is a newer version
+    cleanup:
+      - /share/docs # Remove documentation files
+      - '*.la'      # Remove libtool archive files
+      - '*.a'       # Remove static library files
+      - /include    # Remove header files
+      - /lib/debug  # Remove debug files
+
+  # For converting icons to PNGs and SVGs
+  - name: imagemagick
+    sources:
+      - type: git
+        url: https://github.com/ImageMagick/ImageMagick.git
+        tag: 7.1.1-47
+        commit: 82572afc879b439cbf8c9c6f3a9ac7626adf98fb
+        x-checker-data: # Checks for a newer version when org.flathub.flatpak-external-data-checker is ran on this file
+          type: git
+          tag-pattern: ^(\d[\d\.]+\d-\d+)$ # Regex pattern that matches latest git tag and compares it to source
+    cleanup:
+      - /share/docs # Remove documentation files
+      - '*.la'      # Remove libtool archive files
+      - '*.a'       # Remove static library files
+      - /include    # Remove header files
+      - /lib/debug  # Remove debug files
+
+  # TODO: Find a way to convert to SVG without loosing color
+  # For converting icons to SVGs (An optional ImageMagick delegate)
+  - name: potrace
+    sources:
+      - type: archive
+        url: https://potrace.sourceforge.net/download/1.16/potrace-1.16.tar.gz
+        sha256: be8248a17dedd6ccbaab2fcc45835bb0502d062e40fbded3bc56028ce5eb7acc
+        x-checker-data: # Checks for a newer version when org.flathub.flatpak-external-data-checker is ran on this file
+          type: html
+          url: https://potrace.sourceforge.net/                                                   # Use this file to...
+          version-pattern: /potrace-(\d[\d\.]+\d).tar.gz                                          # Search for this regex pattern
+          url-template: https://potrace.sourceforge.net/download/$version/potrace-$version.tar.gz # Compare this file (found using regex match from above) to the source to see if there is a newer version
+    cleanup:
+      - /share/docs # Remove documentation files
+      - '*.la'      # Remove libtool archive files
+      - '*.a'       # Remove static library files
+      - /include    # Remove header files
+      - /lib/debug  # Remove debug files
 
   - name: Sdk
     buildsystem: simple

@@ -12,7 +12,7 @@ flatpak install --user ../repo io.github.Sdk io.github.Platform
 ### Remote
 > **_NOTE:_**  With https://chrishobday.github.io/FlatpakTesting/repo.flatpakrepo added
 ```console
-flatpak install --user io.github.Sdk io.github.Platform
+flatpak install io.github.Sdk io.github.Platform
 ```
 ## Removing
 ```console
