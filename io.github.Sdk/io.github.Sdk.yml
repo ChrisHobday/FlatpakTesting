@@ -164,9 +164,17 @@ modules:
       - type: file
         path: Icons/io.github.Sdk.svg
 
+      # Icon that will show up in user's App menus, on taskbars, and in storefronts
+      - type: file
+        path: Icons/io.github.Sdk.png
+
       # Scalable icon that will show up in user's App menus, on taskbars, and in storefronts
       - type: file
         path: Icons/io.github.Platform.svg
+
+      # Icon that will show up in user's App menus, on taskbars, and in storefronts
+      - type: file
+        path: Icons/io.github.Platform.png
 
       # Metadata file about this Flatpak that determines things like the version, and is used by storefronts
       - type: file
@@ -178,6 +186,8 @@ modules:
     build-commands:
       - |
         install -Dm644 io.github.Sdk.svg -t ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/      # Install SDK icon (NOTE: We install in scalable because the icon is an SVG, if it was a PNG we'd have to install in the appropriate resolution directory, for example 256x256)
+        install -Dm644 io.github.Sdk.png -t ${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/       # Install SDK icon
         install -Dm644 io.github.Platform.svg -t ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/ # Install Platform icon (NOTE: We install in scalable because the icon is an SVG, if it was a PNG we'd have to install in the appropriate resolution directory, for example 256x256)
+        install -Dm644 io.github.Platform.png -t ${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/  # Install Platform icon
         install -Dm644 io.github.Sdk.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo                 # Install SDK metainfo
         install -Dm644 io.github.Platform.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo            # Install Platform metainfo

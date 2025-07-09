@@ -1,8 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2025 Chris Hobday -->
 <component type="runtime">
-    <id>io.github.Sdk</id>
-    <name>Sdk</name>
-    <summary>A Flatpak Sdk for testing</summary>
-    <metadata_license>FSFAP</metadata_license>
-    <project_license>GPL-3.0-only</project_license>
+  <id>io.github.Sdk</id>
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-3.0-only</project_license>
+  <name>SDK</name>
+  <summary>A Flatpak SDK for testing</summary>
+
+  <developer id="io.github">
+    <name>Chris Hobday</name>
+  </developer>
+
+  <description>
+    <p>This is a Flatpak SDK for testing purposes</p>
+    <p>Lorem ipsom</p>
+  </description>
+
+  <!-- <launchable type="desktop-id">io.github.Sdk.desktop</launchable> -->
+
+  <provides>
+    <!-- <mediatype>application/x-executable</mediatype>
+    <mediatype>application/x-ms-dos-executable</mediatype> -->
+    <binary>wrestool</binary>
+    <binary>magick</binary>
+  </provides>
+
+  <categories>
+    <!-- <category>Game</category> -->
+    <category>Development</category>
+    <category>Utility</category>
+  </categories>
+
+  <keywords>
+    <keyword>Flatpak</keyword>
+    <keyword>Test</keyword>
+    <keyword>Testing</keyword>
+    <keyword>SDK</keyword>
+  </keywords>
+
+  <icon type="stock">io.github.Sdk</icon>
 </component>

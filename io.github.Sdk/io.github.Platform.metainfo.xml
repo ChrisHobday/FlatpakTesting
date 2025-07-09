@@ -12,11 +12,11 @@
   </developer>
 
   <description>
-    <p>This is a Flatpak platform for testing purposes</p>
+    <p>This is a Flatpak Platform for testing purposes</p>
     <p>Lorem ipsom</p>
   </description>
 
-  <!-- <launchable type="desktop-id">io.github.Platformdesktop</launchable> -->
+  <!-- <launchable type="desktop-id">io.github.Platform.desktop</launchable> -->
 
   <provides>
     <!-- <mediatype>application/x-executable</mediatype>
