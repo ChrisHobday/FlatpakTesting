@@ -7,26 +7,29 @@ runtime-version: '1'
 # rename-icon: App                 # Not needed because icons are already in reversed domain name format
 command: App.sh
 finish-args:
-  - --allow=multiarch                                      # Access to 32bit libraries (For running 32bit executables)
-  # - --allow=devel                                          # Uses full SDK as the runtime (Access to more debugging tools and other libs)
-  # - --allow=bluetooth                                      # Access to bluetooth
-  # - --device=all                                           # Access to all devices
-  - --device=dri                                           # Access to DRI for OpenGL rendering
-  - --device=input                                         # Access to input devices (Controllers, etc)
-  # - --socket=wayland                                       # Access to Wayland socket for display
-  - --socket=fallback-x11                                  # Access to X11 socket for display (Incase wayland doesn't work)
-  - --socket=pulseaudio                                    # Access to pulse audio socket for sound
-  - --share=network                                        # Access to networking
-  - --share=ipc                                            # Access to host IPC namespace
-  - --talk-name=org.freedesktop.ScreenSaver                # Can talk to Screensaver (Allows preventing Screensaver)
-  # - --system-talk-name=org.freedesktop.UDisks2             # Can manage storage devices directly
-  # - --system-talk-name=org.freedesktop.NetworkManager      # Can manage network directly
-  # - --filesystem=host:ro                                   # Read access to common host directories
-  - --filesystem=xdg-run/app/com.discordapp.Discord:create # Read/write access to Discord's running instance (Required for setting up Discord rich presence)
-  # - --filesystem=xdg-run/discord-ipc-0:create              # Read/Write access to Discord's IPC socket (Required for setting up Discord rich presence)
-  - --filesystem=xdg-run/gamescope-0:ro                    # Read access to Gamescope's running instance (Required for Gamescope on Steam Deck)
-  # - --env=WINEARCH=win32                                   # Set Wine to 32bit mode (64bit mode is default)
-  # - --env=WINEPREFIX=/var/data/wine                        # Set prefix location
+  - --allow=multiarch                                                     # Access to 32bit libraries (For running 32bit executables)
+  # - --allow=devel                                                         # Uses full SDK as the runtime (Access to more debugging tools and other libs)
+  # - --allow=bluetooth                                                     # Access to bluetooth
+  # - --device=all                                                          # Access to all devices
+  - --device=dri                                                          # Access to DRI for OpenGL rendering
+  - --device=input                                                        # Access to input devices (Controllers, etc)
+  # - --socket=wayland                                                      # Access to Wayland socket for display
+  - --socket=fallback-x11                                                 # Access to X11 socket for display (Incase wayland doesn't work)
+  - --socket=pulseaudio                                                   # Access to pulse audio socket for sound
+  # - --socket=pcsc                                                         # Access to smartcards
+  - --share=network                                                       # Access to networking
+  - --share=ipc                                                           # Access to host IPC namespace
+  - --talk-name=org.freedesktop.ScreenSaver                               # Can talk to Screensaver (Allows preventing Screensaver)
+  # - --system-talk-name=org.freedesktop.UDisks2                            # Can manage storage devices directly
+  # - --system-talk-name=org.freedesktop.NetworkManager                     # Can manage network directly
+  # - --filesystem=host:ro                                                  # Read access to common host directories
+  - --filesystem=xdg-run/app/com.discordapp.Discord:create                # Read/write access to Discord's running instance (Required for setting up Discord rich presence)
+  # - --filesystem=xdg-run/discord-ipc-0:create                             # Read/Write access to Discord's IPC socket (Required for setting up Discord rich presence)
+  - --filesystem=xdg-run/gamescope-0:ro                                   # Read access to Gamescope's running instance (Required for Gamescope on Steam Deck)
+  # - --env=PATH=/app/bin:/usr/bin:/usr/lib/extensions/vulkan/gamescope/bin # Add Vulkan Gamescope extension to path to get access to Gamescope binary
+  # - --env=WINEARCH=win32                                                  # Set Wine to 32bit mode (64bit mode is default)
+  # - --env=WINEDEBUG=-all                                                  # Set Wine debug error messages to be off
+  # - --env=WINEPREFIX=/var/data/wine                                       # Set prefix location
 inherit-extensions:
   - org.freedesktop.Platform.Compat.i386       # 32bit Linux compatibility
   - org.freedesktop.Platform.Compat.i386.Debug # 32bit Linux compatibility debug
@@ -88,46 +91,46 @@ modules:
       #   url: https://gitlab.winehq.org/wine/wine/-/jobs/161893/artifacts/raw/winetest64.exe
       #   sha256: f7eb761d69a294ec4f9f8bf1142731a9a189a638cf047f822846effd9754ba1b            # Hash that is used to confirm the correct file was downloaded
 
-      # NOTE: These files are downloaded when the user installs this Flatpak, and are not included in the Flatpak when it is built. This is necessary to avoid redistributing copyrighted materials or very large files
-      # Executable that tests the 32bit capabilities of the installed Wine (io.github.Sdk) (Downloaded to /app/extra when user is installing because of extra-data)
-      - type: extra-data
-        url: https://gitlab.winehq.org/wine/wine/-/jobs/161893/artifacts/raw/winetest.exe
-        sha256: 7955d7e783806063fb4c263dc7a1394236141980f7c96a3110baa24b12f541f4          # Hash that is used to confirm the correct file was downloaded
-        size: 71634800                                                                    # Size of executable (Found with "wc --bytes < filename")
-        filename: winetest.exe
+      # # NOTE: These files are downloaded when the user installs this Flatpak, and are not included in the Flatpak when it is built. This is necessary to avoid redistributing copyrighted materials or very large files
+      # # Executable that tests the 32bit capabilities of the installed Wine (io.github.Sdk) (Downloaded to /app/extra when user is installing because of extra-data)
+      # - type: extra-data
+      #   url: https://gitlab.winehq.org/wine/wine/-/jobs/161893/artifacts/raw/winetest.exe
+      #   sha256: 7955d7e783806063fb4c263dc7a1394236141980f7c96a3110baa24b12f541f4          # Hash that is used to confirm the correct file was downloaded
+      #   size: 71634800                                                                    # Size of executable (Found with "wc --bytes < filename")
+      #   filename: winetest.exe
 
-      # Executable that tests the 64bit capabilities of the installed Wine (io.github.Sdk) (Downloaded to /app/extra when user is installing because of extra-data)
-      - type: extra-data
-        url: https://gitlab.winehq.org/wine/wine/-/jobs/161893/artifacts/raw/winetest64.exe
-        sha256: f7eb761d69a294ec4f9f8bf1142731a9a189a638cf047f822846effd9754ba1b            # Hash that is used to confirm the correct file was downloaded
-        size: 69053414                                                                      # Size of executable (Found with "wc --bytes < winetest64.exe")
-        filename: winetest64.exe
+      # # Executable that tests the 64bit capabilities of the installed Wine (io.github.Sdk) (Downloaded to /app/extra when user is installing because of extra-data)
+      # - type: extra-data
+      #   url: https://gitlab.winehq.org/wine/wine/-/jobs/161893/artifacts/raw/winetest64.exe
+      #   sha256: f7eb761d69a294ec4f9f8bf1142731a9a189a638cf047f822846effd9754ba1b            # Hash that is used to confirm the correct file was downloaded
+      #   size: 69053414                                                                      # Size of executable (Found with "wc --bytes < winetest64.exe")
+      #   filename: winetest64.exe
 
-      # Script that is automatically ran when user is installing, after extra-data is downloaded
-      - type: script
-        dest-filename: apply_extra # This specific name is needed
-        commands:
-          - |
-            # NOTE: ${FLATPAK_DEST} is not available here because this is ran after the Flatpak is built, while the user is installing
-            wrestool -x --output=WineTest.ico -t14 winetest.exe # Extract ico from exe (Uses Icoutils module from io.github.Sdk)
-            magick WineTest.ico WineTest.png                    # Convert ico to png (Uses ImageMagick module from io.github.Sdk) (This can extract 1 or many pngs with possibly different icons and not always labeled in order of resolution, therefore it takes some trial and error to find out which resolution icon is named what)
-            magick WineTest.ico WineTest.svg                    # Convert ico to svg (Uses ImageMagick + potrace module from io.github.Sdk) TODO: Find a way to convert to SVG without loosing color
+      # # Script that is automatically ran when user is installing, after extra-data is downloaded
+      # - type: script
+      #   dest-filename: apply_extra # This specific name is needed
+      #   commands:
+      #     - |
+      #       # NOTE: ${FLATPAK_DEST} is not available here because this is ran after the Flatpak is built, while the user is installing
+      #       wrestool -x --output=WineTest.ico -t14 winetest.exe # Extract ico from exe (Uses Icoutils module from io.github.Sdk)
+      #       magick WineTest.ico WineTest.png                    # Convert ico to png (Uses ImageMagick module from io.github.Sdk) (This can extract 1 or many pngs with possibly different icons and not always labeled in order of resolution, therefore it takes some trial and error to find out which resolution icon is named what)
+      #       magick WineTest.ico WineTest.svg                    # Convert ico to svg (Uses ImageMagick + potrace module from io.github.Sdk) TODO: Find a way to convert to SVG without loosing color
 
-            # Resize icon to missing standard Linux icon sizes (Uses ImageMagick module from io.github.Sdk)
-            magick WineTest-0.png -resize 128x128 WineTest128x128.png
-            magick WineTest-0.png -resize 64x64 WineTest64x64.png
-            magick WineTest-0.png -resize 24x24 WineTest24x24.png
-            magick WineTest-0.png -resize 16x16 WineTest16x16.png
+      #       # Resize icon to missing standard Linux icon sizes (Uses ImageMagick module from io.github.Sdk)
+      #       magick WineTest-0.png -resize 128x128 WineTest128x128.png
+      #       magick WineTest-0.png -resize 64x64 WineTest64x64.png
+      #       magick WineTest-0.png -resize 24x24 WineTest24x24.png
+      #       magick WineTest-0.png -resize 16x16 WineTest16x16.png
 
-            # Install icons to appropriate directories
-            install -Dm644 WineTest-0.png ./export/share/icons/hicolor/256x256/apps/io.github.App.png
-            install -Dm644 WineTest128x128.png ./export/share/icons/hicolor/128x128/apps/io.github.App.png
-            install -Dm644 WineTest64x64.png ./export/share/icons/hicolor/64x64/apps/io.github.App.png
-            install -Dm644 WineTest-3.png ./export/share/icons/hicolor/48x48/apps/io.github.App.png
-            install -Dm644 WineTest-2.png ./export/share/icons/hicolor/32x32/apps/io.github.App.png
-            install -Dm644 WineTest24x24.png ./export/share/icons/hicolor/24x24/apps/io.github.App.png
-            install -Dm644 WineTest16x16.png ./export/share/icons/hicolor/16x16/apps/io.github.App.png
-            install -Dm644 WineTest.svg ./export/share/icons/hicolor/scalable/apps/io.github.App.svg
+      #       # Install icons to appropriate directories
+      #       install -Dm644 WineTest-0.png ./export/share/icons/hicolor/256x256/apps/io.github.App.png
+      #       install -Dm644 WineTest128x128.png ./export/share/icons/hicolor/128x128/apps/io.github.App.png
+      #       install -Dm644 WineTest64x64.png ./export/share/icons/hicolor/64x64/apps/io.github.App.png
+      #       install -Dm644 WineTest-3.png ./export/share/icons/hicolor/48x48/apps/io.github.App.png
+      #       install -Dm644 WineTest-2.png ./export/share/icons/hicolor/32x32/apps/io.github.App.png
+      #       install -Dm644 WineTest24x24.png ./export/share/icons/hicolor/24x24/apps/io.github.App.png
+      #       install -Dm644 WineTest16x16.png ./export/share/icons/hicolor/16x16/apps/io.github.App.png
+      #       install -Dm644 WineTest.svg ./export/share/icons/hicolor/scalable/apps/io.github.App.svg
 
       # Windows registry file that can be used to set needed registry keys of a Wine prefix
       - type: file
@@ -155,9 +158,9 @@ modules:
         # NOTE: ${FLATPAK_DEST} maps to /app here, because this is an app
         # install -Dm744 winetest.exe -t ${FLATPAK_DEST}/bin                                    # Install executable
         # install -Dm744 winetest64.exe -t ${FLATPAK_DEST}/bin                                  # Install executable
-        ln -s ${FLATPAK_DEST}/extra/winetest.exe ${FLATPAK_DEST}/bin/winetest.exe             # Symlink to executable that will be downloaded with extra-data when user installs
-        ln -s ${FLATPAK_DEST}/extra/winetest64.exe ${FLATPAK_DEST}/bin/winetest64.exe         # Symlink to executable that will be downloaded with extra-data when user installs
-        install -Dm744 apply_extra -t ${FLATPAK_DEST}/bin/                                    # Install script that will be ran automatically when user installs, after extra-data sources are downloaded
+        # ln -s ${FLATPAK_DEST}/extra/winetest.exe ${FLATPAK_DEST}/bin/winetest.exe             # Symlink to executable that will be downloaded with extra-data when user installs
+        # ln -s ${FLATPAK_DEST}/extra/winetest64.exe ${FLATPAK_DEST}/bin/winetest64.exe         # Symlink to executable that will be downloaded with extra-data when user installs
+        # install -Dm744 apply_extra -t ${FLATPAK_DEST}/bin/                                    # Install script that will be ran automatically when user installs, after extra-data sources are downloaded
         install -Dm644 WineGraphics.reg -t ${FLATPAK_DEST}/share/                             # Install Windows registry keys that will be applied to Wine prefix later
         install -Dm744 App.sh -t ${FLATPAK_DEST}/bin/                                         # Install script that will act as the launch command when the Flatpak starts
         install -Dm644 io.github.App.svg -t ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/ # Install icon (NOTE: We install in scalable because the icon is an SVG, if it was a PNG we'd have to install in the appropriate resolution directory, for example 256x256)
