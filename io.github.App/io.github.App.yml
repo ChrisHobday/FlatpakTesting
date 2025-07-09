@@ -139,7 +139,7 @@ modules:
 
       # Scalable icon that will show up in user's App menus, on taskbars, and in storefronts
       - type: file
-        path: Icons/io.github.svg
+        path: Icons/io.github.App.svg
 
       # Desktop file that will be installed below, then exported by Flatpak and appear in user's App menus
       - type: file
