@@ -67,7 +67,7 @@ modules:
 
         mkdir -p ${FLATPAK_DEST}/bin                                                                               # Make directory needed for binaries
         mkdir -p ${FLATPAK_DEST}/share/applications/                                                               # Make directory for desktop files
-        mkdir -p ${FLATPAK_DEST}/share/icons/hicolor/{16x16,24x24,32x32,48x48,64x64,128x128,256x256,scalable}/apps # Make directories needed for icons
+        mkdir -p ${FLATPAK_DEST}/share/icons/hicolor/{16x16,24x24,32x32,48x48,64x64,128x128,256x256,512x512,scalable}/apps # Make directories needed for icons
 
   - name: App
     sources:
@@ -146,7 +146,35 @@ modules:
 
       # Icon that will show up in user's App menus, on taskbars, and in storefronts
       - type: file
-        path: Icons/io.github.App.png
+        path: Icons/io.github.App512x512.png
+
+      # Icon that will show up in user's App menus, on taskbars, and in storefronts
+      - type: file
+        path: Icons/io.github.App256x256.png
+
+      # Icon that will show up in user's App menus, on taskbars, and in storefronts
+      - type: file
+        path: Icons/io.github.App128x128.png
+
+      # Icon that will show up in user's App menus, on taskbars, and in storefronts
+      - type: file
+        path: Icons/io.github.App64x64.png
+
+      # Icon that will show up in user's App menus, on taskbars, and in storefronts
+      - type: file
+        path: Icons/io.github.App48x48.png
+
+      # Icon that will show up in user's App menus, on taskbars, and in storefronts
+      - type: file
+        path: Icons/io.github.App32x32.png
+
+      # Icon that will show up in user's App menus, on taskbars, and in storefronts
+      - type: file
+        path: Icons/io.github.App24x24.png
+
+      # Icon that will show up in user's App menus, on taskbars, and in storefronts
+      - type: file
+        path: Icons/io.github.App16x16.png
 
       # Desktop file that will be installed below, then exported by Flatpak and appear in user's App menus
       - type: file
@@ -160,14 +188,21 @@ modules:
       - |
         # NOTE: -Dm744 installs with execute permission, while -Dm644 does not
         # NOTE: ${FLATPAK_DEST} maps to /app here, because this is an app
-        # install -Dm744 winetest.exe -t ${FLATPAK_DEST}/bin                                    # Install executable
-        # install -Dm744 winetest64.exe -t ${FLATPAK_DEST}/bin                                  # Install executable
-        # ln -s ${FLATPAK_DEST}/extra/winetest.exe ${FLATPAK_DEST}/bin/winetest.exe             # Symlink to executable that will be downloaded with extra-data when user installs
-        # ln -s ${FLATPAK_DEST}/extra/winetest64.exe ${FLATPAK_DEST}/bin/winetest64.exe         # Symlink to executable that will be downloaded with extra-data when user installs
-        # install -Dm744 apply_extra -t ${FLATPAK_DEST}/bin/                                    # Install script that will be ran automatically when user installs, after extra-data sources are downloaded
-        install -Dm644 WineGraphics.reg -t ${FLATPAK_DEST}/share/                              # Install Windows registry keys that will be applied to Wine prefix later
-        install -Dm744 App.sh -t ${FLATPAK_DEST}/bin/                                          # Install script that will act as the launch command when the Flatpak starts
-        install -Dm644 io.github.App.svg -t ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/ # Install icon (NOTE: We install in scalable because the icon is an SVG, if it was a PNG we'd have to install in the appropriate resolution directory, for example 256x256)
-        install -Dm644 io.github.App.png -t ${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/  # Install icon
-        install -Dm644 io.github.App.desktop -t ${FLATPAK_DEST}/share/applications/            # Install desktop file that will be exported for desktop environments to use in their App menus
-        install -Dm644 io.github.App.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo            # Install metainfo
+        # install -Dm744 winetest.exe -t ${FLATPAK_DEST}/bin                                                         # Install executable
+        # install -Dm744 winetest64.exe -t ${FLATPAK_DEST}/bin                                                       # Install executable
+        # ln -s ${FLATPAK_DEST}/extra/winetest.exe ${FLATPAK_DEST}/bin/winetest.exe                                  # Symlink to executable that will be downloaded with extra-data when user installs
+        # ln -s ${FLATPAK_DEST}/extra/winetest64.exe ${FLATPAK_DEST}/bin/winetest64.exe                              # Symlink to executable that will be downloaded with extra-data when user installs
+        # install -Dm744 apply_extra -t ${FLATPAK_DEST}/bin/                                                         # Install script that will be ran automatically when user installs, after extra-data sources are downloaded
+        install -Dm644 WineGraphics.reg -t ${FLATPAK_DEST}/share/                                                  # Install Windows registry keys that will be applied to Wine prefix later
+        install -Dm744 App.sh -t ${FLATPAK_DEST}/bin/                                                              # Install script that will act as the launch command when the Flatpak starts
+        install -Dm644 io.github.App.svg -t ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/                     # Install icon (NOTE: We install in scalable because the icon is an SVG, if it was a PNG we'd have to install in the appropriate resolution directory, for example 256x256)
+        install -Dm644 io.github.App512x512.png ${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/io.github.App.png # Install icon
+        install -Dm644 io.github.App256x256.png ${FLATPAK_DEST}/share/icons/hicolor/256x256/apps/io.github.App.png # Install icon
+        install -Dm644 io.github.App128x128.png ${FLATPAK_DEST}/share/icons/hicolor/128x128/apps/io.github.App.png # Install icon
+        install -Dm644 io.github.App64x64.png ${FLATPAK_DEST}/share/icons/hicolor/64x64/apps/io.github.App.png     # Install icon
+        install -Dm644 io.github.App48x48.png ${FLATPAK_DEST}/share/icons/hicolor/48x48/apps/io.github.App.png     # Install icon
+        install -Dm644 io.github.App32x32.png ${FLATPAK_DEST}/share/icons/hicolor/32x32/apps/io.github.App.png     # Install icon
+        install -Dm644 io.github.App24x24.png ${FLATPAK_DEST}/share/icons/hicolor/24x24/apps/io.github.App.png     # Install icon
+        install -Dm644 io.github.App16x16.png ${FLATPAK_DEST}/share/icons/hicolor/16x16/apps/io.github.App.png     # Install icon
+        install -Dm644 io.github.App.desktop -t ${FLATPAK_DEST}/share/applications/                                # Install desktop file that will be exported for desktop environments to use in their App menus
+        install -Dm644 io.github.App.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo                                # Install metainfo
