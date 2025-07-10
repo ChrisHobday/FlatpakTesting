@@ -1,17 +1,113 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component>
+<!-- Copyright 2025 Chris Hobday -->
+<component type="runtime">
   <id>io.github.App</id>
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-3.0-only</project_license>
   <name>App</name>
-  <summary>A Flatpak test app</summary>
-  <metadata_license>CC-BY-SA-3.0</metadata_license>
-  <project_license>GPL-2.0+</project_license>
+  <summary>A Flatpak app for testing</summary>
+
+  <developer id="io.github">
+    <name>Chris Hobday</name>
+  </developer>
+
   <description>
-    <p>
-      A Flatpak test app
-    </p>
+    <p>This is a Flatpak app for testing purposes</p>
+    <p>Lorem ipsom</p>
   </description>
+
+  <launchable type="desktop-id">io.github.App.desktop</launchable>
+
+  <provides>
+    <!-- <mediatype>application/x-executable</mediatype>
+    <mediatype>application/x-ms-dos-executable</mediatype> -->
+    <binary>wrestool</binary>
+    <binary>magick</binary>
+  </provides>
+
+  <categories>
+    <!-- <category>Game</category> -->
+    <category>Development</category>
+    <category>Utility</category>
+  </categories>
+
+  <keywords>
+    <keyword>Flatpak</keyword>
+    <keyword>Test</keyword>
+    <keyword>Testing</keyword>
+    <keyword>App</keyword>
+  </keywords>
+
+  <icon type="stock">io.github.App</icon>
+
+  <project_group>ChrisHobday</project_group>
+
+  <branding>
+    <color type="primary" scheme_preference="light">#af7faf</color>
+    <color type="primary" scheme_preference="dark">#a599a5</color>
+  </branding>
+
+  <content_rating type="oars-1.0" />
+
+  <url type="homepage">https://github.com/ChrisHobday/FlatpakTesting</url>
+  <url type="bugtracker">https://github.com/ChrisHobday/FlatpakTesting/issues</url>
+  <!-- <url type="donation">https://example.org/donate</url> -->
+  <!-- <url type="contact">https://example.org/contact</url> -->
+  <!-- <url type="faq">https://example.org/faq</url> -->
+  <!-- <url type="translate">https://example.org/translate</url> -->
+  <!-- <url type="contribute">https://example.org/contribute</url> -->
+  <!-- <url type="vcs-browser">https://example.org/repository</url> -->
+
+
+  <screenshots>
+    <screenshot type="default">
+      <caption>Matlab running via wine</caption>
+      <image>https://dl.winehq.org/share/images/screenshots/matlab.jpg</image>
+    </screenshot>
+    <screenshot>
+      <caption>The Windows Steam client running via wine</caption>
+      <image>https://dl.winehq.org/share/images/screenshots/steam.jpg</image>
+    </screenshot>
+    <screenshot>
+      <caption>GOG Galaxy client running via wine</caption>
+      <image>https://dl.winehq.org/share/images/screenshots/goggalaxy.jpg</image>
+    </screenshot>
+    <screenshot>
+      <caption>A horse in the game "Skyrim Special Edition" running via wine</caption>
+      <image>https://dl.winehq.org/share/images/screenshots/skyrim_specialed.jpg</image>
+    </screenshot>
+  </screenshots>
+
   <releases>
-    <release version="1" date="2025-02-18"/>
-    <release version="2" date="2025-04-1"/>
+    <release version="1" date="2025-07-09">
+      <!-- <url type="details">https://example.org/changelog.html#version_1.0.1</url> -->
+      <description>
+        <p>Release description</p>
+          <ul>
+            <li>List of changes</li>
+            <li>List of changes</li>
+          </ul>
+      </description>
+    </release>
   </releases>
+
+  <!-- <translation type="gettext">gnome-builder</translation>
+  <translation type="qt">qtdemo</translation> -->
+
+  <!-- <requires>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <control>gamepad</control>
+    <control>touch</control>
+    <display_length compare="ge">360</display_length>
+    <display_length compare="ge">768</display_length>
+    <display_length compare="le">1279</display_length>
+  </requires> -->
+
+  <!-- <recommends>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <control>gamepad</control>
+    <control>touch</control>
+  </recommends> -->
 </component>

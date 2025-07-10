@@ -99,9 +99,9 @@
     <control>pointing</control>
     <control>gamepad</control>
     <control>touch</control>
-    <display_length compare="ge">360</display_length> <!-- Mobile/tablet AND desktop supported -->
-    <display_length compare="ge">768</display_length> <!-- ONLY desktop supported -->
-    <display_length compare="le">1279</display_length> <!-- ONLY mobile/tablet supported -->
+    <display_length compare="ge">360</display_length>
+    <display_length compare="ge">768</display_length>
+    <display_length compare="le">1279</display_length>
   </requires> -->
 
   <!-- <recommends>
