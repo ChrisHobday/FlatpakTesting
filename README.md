@@ -20,3 +20,7 @@ flatpak install io.github.App.BaseExtender
 ```console
 flatpak remote-delete repo
 ```
+## Updating repo
+```console
+flatpak build-update-repo --gpg-sign=<gpg-key> --generate-static-deltas --prune repo
+```
