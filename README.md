@@ -22,5 +22,5 @@ flatpak remote-delete repo
 ```
 ## Updating repo
 ```console
-flatpak build-update-repo --gpg-sign=<gpg-key> --generate-static-deltas --prune repo
+flatpak build-update-repo --gpg-sign=GPGKey --generate-static-deltas --prune repo
 ```
