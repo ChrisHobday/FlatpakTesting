@@ -1,1 +1,1 @@
-echo "App Version 2"
+wineconsole explorer
