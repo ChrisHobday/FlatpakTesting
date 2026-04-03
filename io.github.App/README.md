@@ -2,7 +2,7 @@
 ## Building
 > **_NOTE:_**  With io.github.Sdk and io.github.Platform installed.
 ```console
-flatpak run org.flatpak.Builder build-dir --repo=../repo --force-clean io.github.App.yml
+flatpak-builder build-dir --repo=../repo --force-clean --disable-rofiles-fuse --gpg-sign=GPGKey io.github.App.yml
 ```
 ## Installing
 ### Locally
